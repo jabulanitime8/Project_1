@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ลงทะเบียน</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="register.css"> 
+
+    <style>
+        /* สไตล์ body สำหรับหน้าลงทะเบียนเท่านั้น เพื่อให้ฟอร์มอยู่ตรงกลาง */
+        body.register-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            background: var(--color-background);
+            font-family: 'Kanit', 'Poppins', sans-serif;
+            color: var(--color-dark);
+            overflow: hidden;
+        }
+
+        /* สำหรับ Dark Theme Mode */
+        body.register-page.dark-theme-variables {
+            background: var(--color-background);
+        }
+    </style>
+</head>
+<body class="register-page">
+
+    <div class="register-card">
+        <div class="logo-in-card"> 
+            <img src="./images/logo-jabulani.png" alt="Jabulani Icon" class="profile-photo"> 
+            <h2>ระบบจองห้องประชุม</h2>
+        </div>
+
+        <h2>ลงทะเบียน</h2>
+        <form action="#" method="post" class="register-form">
+            <div class="form-group">
+                <label for="reg_username">ชื่อผู้ใช้</label>
+                <input type="text" id="reg_username" name="username" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="reg_email">อีเมล</label>
+                <input type="email" id="reg_email" name="email" required autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label for="reg_password">รหัสผ่าน</label>
+                <input type="password" id="reg_password" name="password" required autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <label for="reg_confirm_password">ยืนยันรหัสผ่าน</label>
+                <input type="password" id="reg_confirm_password" name="confirm_password" required autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <button type="submit">สร้างบัญชี</button>
+            </div>
+            <div class="already-have-account">
+                มีบัญชีอยู่แล้ว? <a href="login.html">เข้าสู่ระบบ</a>
+            </div>
+        </form>
+    </div>
+</body>
+<script src="register.js"></script>
+</html>

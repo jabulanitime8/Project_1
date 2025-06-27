@@ -1,0 +1,174 @@
+/* =================== REGISTER PAGE STYLES =================== */
+
+/* สไตล์สำหรับโลโก้ใหญ่ด้านบน (เหมือน login.css) */
+.main-logo-container {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #A31F34;
+    box-shadow: var(--box-shadow);
+    transition: all 300ms ease;
+}
+
+.main-logo-container:hover {
+    box-shadow: none;
+}
+
+.main-logo-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* กล่องลงทะเบียน (Register Card) - คล้าย Login Card */
+.register-card {
+    background: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    box-shadow: var(--box-shadow);
+    width: 100%;
+    max-width: 450px; /* อาจจะขยายความกว้างขึ้นเล็กน้อยถ้ามีหลายฟิลด์ */
+    text-align: center;
+    transition: all 300ms ease;
+}
+
+.register-card:hover {
+    box-shadow: none;
+}
+
+/* สไตล์สำหรับโลโก้ Jabulani ขนาดเล็กในกล่อง Register Card (เหมือน login.css) */
+.register-card .logo-in-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.register-card .logo-in-card .profile-photo {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+}
+
+.register-card .logo-in-card h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-dark);
+}
+
+.register-card h2 {
+    color: var(--color-dark);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.87rem;
+    color: var(--color-info-dark);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"], /* เพิ่ม type="email" */
+.form-group input[type="password"] {
+    width: 100%;
+    padding: var(--padding-1);
+    background: var(--color-light);
+    border-radius: var(--border-radius-1);
+    color: var(--color-dark);
+    font-size: 0.9rem;
+    border: 1px solid transparent;
+    transition: all 300ms ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus, /* เพิ่ม type="email" */
+.form-group input[type="password"]:focus {
+    background: var(--color-white);
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(115, 128, 236, 0.2);
+    outline: none;
+}
+
+.form-group button[type="submit"] {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 1rem var(--card-padding);
+    border-radius: var(--border-radius-2);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 0.5rem;
+    transition: all 300ms ease;
+    border: none;
+}
+
+.form-group button[type="submit"]:hover {
+    background-color: var(--color-primary-variant);
+    box-shadow: var(--box-shadow);
+}
+
+.already-have-account {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-dark-variant); /* สีข้อความทั่วไป */
+}
+
+.already-have-account a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: all 300ms ease;
+}
+
+.already-have-account a:hover {
+    text-decoration: underline;
+}
+
+/* =================== Media Queries สำหรับ Register Page =================== */
+@media screen and (max-width: 768px) {
+    body.register-page {
+        padding: 1rem;
+    }
+
+    .main-logo-container {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 1.5rem;
+    }
+
+    .register-card {
+        padding: var(--padding-1);
+    }
+
+    .register-card h2,
+    .register-card .logo-in-card h2 {
+        font-size: 1.6rem;
+    }
+
+    .form-group button[type="submit"] {
+        padding: 0.8rem var(--padding-1);
+    }
+}
