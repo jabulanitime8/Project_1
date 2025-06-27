@@ -1,0 +1,177 @@
+/* =================== LOGIN PAGE STYLES =================== */
+
+/* สไตล์สำหรับโลโก้ใหญ่ด้านบน */
+.main-logo-container {
+    margin-bottom: 2rem; /* ระยะห่างจากกล่อง Login Card */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* ถ้าโลโก้ของคุณเป็นรูปวงกลมที่มีพื้นหลังอยู่แล้ว ไม่จำเป็นต้องกำหนด width, height, border-radius ตรงนี้ */
+    /* แต่ถ้าเป็นรูปสี่เหลี่ยมที่คุณต้องการให้แสดงผลเป็นวงกลมเหมือนภาพ คุณอาจต้องครอบด้วย div ที่มีขนาดคงที่และ overflow: hidden */
+    width: 200px; /* ขนาดของ container สำหรับโลโก้ใหญ่ */
+    height: 200px;
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+    overflow: hidden; /* ซ่อนส่วนเกินของรูป */
+    background-color: #A31F34; /* สีพื้นหลังวงกลม ตามภาพที่คุณให้มา */
+    box-shadow: var(--box-shadow); /* เพิ่มเงาให้โลโก้ใหญ่ด้วย */
+    transition: all 300ms ease;
+}
+
+.main-logo-container:hover {
+    box-shadow: none; /* Effect เมื่อ hover คล้ายกับ card ใน Dashboard */
+}
+
+.main-logo-image {
+    max-width: 100%; /* ทำให้รูปภาพไม่ล้นกรอบ */
+    height: auto;
+    display: block; /* ลบช่องว่างใต้ภาพ */
+    /* ถ้าโลโก้มีเงา 3D ตามภาพ ให้จัดการในตัวไฟล์รูปภาพเอง หรือใช้ filter: drop-shadow */
+}
+
+
+/* กล่อง Login ที่จะทำเป็น Card */
+.login-card {
+    background: var(--color-white); /* พื้นหลังเป็นสีขาว/สีของ card */
+    padding: var(--card-padding); /* ใช้ padding ของ card */
+    border-radius: var(--card-border-radius); /* ใช้ border-radius ของ card */
+    box-shadow: var(--box-shadow); /* ใช้ box-shadow ของ card */
+    width: 100%;
+    max-width: 400px; /* จำกัดความกว้างสูงสุด */
+    text-align: center;
+    transition: all 300ms ease; /* เพิ่ม transition ให้เนียนขึ้น */
+    /* ไม่มี margin-top ที่นี่ เพราะ body flex จะจัดให้ */
+}
+
+.login-card:hover {
+    box-shadow: none; /* Effect เมื่อ hover คล้ายกับ card ใน Dashboard */
+}
+
+/* สไตล์สำหรับโลโก้ Jabulani ขนาดเล็กในกล่อง Login Card */
+.login-card .logo-in-card {
+    display: flex;
+    justify-content: center; /* จัดให้อยู่ตรงกลาง */
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem; /* ระยะห่างจากหัวข้อ "เข้าสู่ระบบ" */
+}
+
+.login-card .logo-in-card .profile-photo {
+    /* ใช้ class profile-photo ที่คุณมีอยู่แล้ว */
+    width: 2.8rem; /* ขนาดไอคอนเล็ก (ปรับให้เข้ากับ profile-photo ใน Dashboard) */
+    height: 2.8rem;
+    border-radius: 50%; /* ทำให้เป็นวงกลม */
+    overflow: hidden;
+    display: block; /* เพื่อความแน่นอน */
+}
+
+.login-card .logo-in-card h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-dark);
+}
+
+.login-card h2 {
+    color: var(--color-dark);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* ช่องว่างระหว่าง form-group */
+}
+
+.form-group {
+    text-align: left; /* จัดชิดซ้ายสำหรับ label และ input */
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.87rem;
+    color: var(--color-info-dark); /* สีข้อความ info-dark */
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: var(--padding-1); /* ใช้ padding ของคุณ */
+    background: var(--color-light); /* พื้นหลังช่องกรอกข้อมูล */
+    border-radius: var(--border-radius-1); /* ความโค้งมน */
+    color: var(--color-dark); /* สีข้อความในช่องกรอก */
+    font-size: 0.9rem; /* ขนาด font ในช่องกรอก */
+    border: 1px solid transparent; /* Border ใส */
+    transition: all 300ms ease; /* เพิ่ม transition */
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus {
+    background: var(--color-white); /* เมื่อ focus พื้นหลังเป็นสีขาว */
+    border: 1px solid var(--color-primary); /* Border สี primary */
+    box-shadow: 0 0 0 2px rgba(115, 128, 236, 0.2); /* เงารอบๆ สี primary (ปรับ rgba ให้เข้ากับ color-primary ของคุณ) */
+    outline: none; /* ลบ outline ที่เบราว์เซอร์สร้างขึ้น */
+}
+
+.form-group button[type="submit"] {
+    background-color: var(--color-primary); /* สีปุ่มหลัก */
+    color: var(--color-white); /* สีข้อความปุ่ม */
+    padding: 1rem var(--card-padding); /* ขนาดปุ่มที่เหมาะสม */
+    border-radius: var(--border-radius-2); /* ความโค้งมนของปุ่ม */
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    margin-top: 0.5rem; /* ระยะห่างจากช่อง password */
+    transition: all 300ms ease;
+    border: none; /* ลบ border ออก */
+}
+
+.form-group button[type="submit"]:hover {
+    background-color: var(--color-primary-variant); /* สีปุ่มเมื่อ hover */
+    box-shadow: var(--box-shadow); /* เพิ่มเงาเมื่อ hover คล้าย card */
+}
+
+.forgot-password {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+
+.forgot-password a {
+    color: var(--color-primary); /* สีลิงก์เป็นสี primary */
+    text-decoration: none; /* ไม่มีขีดเส้นใต้ */
+    transition: all 300ms ease;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline; /* มีขีดเส้นใต้เมื่อ hover */
+}
+
+/* =================== Media Queries สำหรับ Login Page =================== */
+@media screen and (max-width: 768px) {
+    body.login-page {
+        padding: 1rem; /* ลด padding รอบๆ สำหรับมือถือ */
+    }
+
+    .main-logo-container {
+        width: 150px; /* ปรับขนาดโลโก้ใหญ่สำหรับมือถือ */
+        height: 150px;
+        margin-bottom: 1.5rem;
+    }
+
+    .login-card {
+        padding: var(--padding-1); /* ลด padding ภายในกล่อง login */
+    }
+
+    .login-card h2,
+    .login-card .logo-in-card h2 {
+        font-size: 1.6rem; /* ปรับขนาดหัวข้อสำหรับมือถือ */
+    }
+
+    .form-group button[type="submit"] {
+        padding: 0.8rem var(--padding-1); /* ปรับขนาดปุ่มสำหรับมือถือ */
+    }
+}

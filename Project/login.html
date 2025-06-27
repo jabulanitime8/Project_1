@@ -1,24 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page Jabulani</title>
+    <title>เข้าสู่ระบบ</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="login.css"> 
 
-    <!-- Material CDN -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
-      rel="stylesheet">
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="./style.css">
+    <style>
+        /* สไตล์ body สำหรับหน้า Login เท่านั้น เพื่อให้ฟอร์มอยู่ตรงกลาง */
+        body.login-page {
+            display: flex;
+            flex-direction: column; /* จัดแนวตั้งเพื่อรองรับโลโก้ด้านบน */
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem; /* เพิ่ม padding รอบๆ */
+            background: var(--color-background); /* ใช้พื้นหลังตามธีมหลักของคุณ */
+            font-family: 'Kanit', 'Poppins', sans-serif; /* ให้ font เข้ากับ Dashboard */
+            color: var(--color-dark); /* สีข้อความหลัก */
+            overflow: hidden; /* ป้องกัน scrollbar ไม่จำเป็น */
+        }
 
+        /* สำหรับ Dark Theme Mode */
+        body.login-page.dark-theme-variables {
+            background: var(--color-background); /* จะถูก override ด้วย dark-theme-variables ใน root */
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <h3>Login</h3>
-    <input type="text">username
-    <input type="password">password
-    <button>Sign In</button>
-    <b>Don't have Account?<a href="#">Sign Up</a></b>
+<body class="login-page">
+
+    <div class="main-logo-container">
+        <img src="your_large_jabulani_time8_logo.png" alt="Jabulani Time8 Logo" class="main-logo-image">
+    </div>
+
+    <div class="login-card">
+        <div class="logo-in-card"> 
+            <img src="your_small_jabulani_icon.png" alt="Jabulani Icon" class="profile-photo"> 
+            <h2>Jabulani</h2>
+        </div>
+
+        <h2>เข้าสู่ระบบ</h2>
+        <form action="#" method="post" class="login-form">
+            <div class="form-group">
+                <label for="username">ชื่อผู้ใช้</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">รหัสผ่าน</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+            </div>
+            <div class="form-group">
+                <button type="submit">เข้าสู่ระบบ</button>
+            </div>
+            <div class="forgot-password">
+                <a href="#">ลืมรหัสผ่าน?</a>
+            </div>
+        </form>
     </div>
 </body>
 </html>
