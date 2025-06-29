@@ -1,0 +1,66 @@
+//=========== Users =======//
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL, -- เก็บ hashed password
+    email VARCHAR(100) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+//========== Rooms =============//
+CREATE TABLE rooms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_name VARCHAR(100) NOT NULL UNIQUE, -- ชื่อห้องประชุม (ต้องไม่ซ้ำกัน)
+    capacity INT NOT NULL DEFAULT 10,       -- ความจุของห้อง (จำนวนคน)
+    description TEXT,                       -- รายละเอียดห้อง เช่น มีโปรเจคเตอร์, ไวท์บอร์ด
+    location VARCHAR(255),                  -- ที่ตั้งของห้อง (เช่น ชั้น 3, อาคาร A)
+    is_active BOOLEAN DEFAULT TRUE,         -- สถานะเปิดใช้งาน/ปิดใช้งานห้อง
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- เพิ่มข้อมูลห้องประชุมตัวอย่าง (สามารถแก้ไขได้ตามต้องการ)
+INSERT INTO rooms (room_name, capacity, description, location) VALUES
+('ห้องประชุมปิยามุมัง', 50, 'จอทีวี, ระบบเสียงครบวงจร, รองรับ video conference', 'ชั้น 4 บก.นทพ.'),
+('ห้องประชุมห้วยทราย', 30, 'โปรเจคเตอร์, ระบบเสียงครบวงจร, รองรับ video conference', 'ชั้น 2 บก.นทพ.'),
+('ห้องประชุมส่วนสั่งการ', 20, 'จอทีวี, ระบบเสียงครบวงจร, รองรับ video conference', 'ชั้น 5 บก.นทพ.'),
+('ห้องประชุมห้วยฮ่องไคร้', 20, 'โปรเจคเตอร์, ระบบเสียงครบวงจร', 'ชั้น 4 บก.นทพ.'),
+('หอประชุมมหาศรานนท์', 200, 'จอLED, ระบบเสียงครบวงจร, รองรับ video conference', 'หอประชุมมหาศรานนท์'),
+('อาคารเอนกประสงค์', 300, 'จอLED, ระบบเสียงครบวงจร, รองรับ video conference', 'อาคารเอนกประสงค์'),
+('แหล่งชุมนุมเจริญศิริ', 30, 'โปรเจคเตอร์, ระบบเสียงครบวงจร', 'แหล่งชุมนุมเจริญศิริ');
+
+//============== Officer ==============//
+CREATE TABLE officers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    officer_name VARCHAR(100) NOT NULL,    -- ชื่อ-นามสกุลเจ้าหน้าที่
+    email VARCHAR(100) UNIQUE,              -- อีเมลเจ้าหน้าที่ (สำหรับติดต่อ, อาจใช้แจ้งเตือน)
+    phone VARCHAR(20),                      -- เบอร์โทรศัพท์
+    department VARCHAR(100),                -- แผนก/ฝ่าย
+    is_active BOOLEAN DEFAULT TRUE,         -- สถานะเจ้าหน้าที่
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- เพิ่มข้อมูลเจ้าหน้าที่ตัวอย่าง
+INSERT INTO officers (officer_name, email, phone, department) VALUES
+('จ.อ.พีรวิชญ์ บับภีร์', 'pirawit06@gmail.com', '0650206787', 'สื่อสารและอิเล็กทรอนิกส์');
+
+//======================== Booking =======================//
+CREATE TABLE bookings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    room_id INT NOT NULL,                  -- ID ห้องที่ถูกจอง (Foreign Key to rooms.id)
+    user_id INT NOT NULL,                  -- ID ผู้จอง (Foreign Key to users.id)
+    officer_id INT,                         -- ID เจ้าหน้าที่ผู้ดูแลการจอง (Foreign Key to officers.id, อนุญาตให้ว่างได้ถ้าไม่จำเป็น)
+    title VARCHAR(255) NOT NULL,            -- หัวข้อการประชุม/กิจกรรม
+    description TEXT,                       -- รายละเอียดการประชุม
+    start_time DATETIME NOT NULL,           -- เวลาเริ่มต้นการจอง
+    end_time DATETIME NOT NULL,             -- เวลาสิ้นสุดการจอง
+    status ENUM('pending', 'approved', 'rejected', 'cancelled', 'completed') DEFAULT 'pending', -- สถานะการจอง
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    -- กำหนด Foreign Key Constraints (เพื่อความสัมพันธ์ของข้อมูล)
+    FOREIGN KEY (room_id) REFERENCES rooms(id) ON DELETE RESTRICT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT,
+    FOREIGN KEY (officer_id) REFERENCES officers(id) ON DELETE SET NULL
+);
