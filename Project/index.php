@@ -65,55 +65,14 @@ $current_username = $_SESSION['username'];
             <h1>Dashboard</h1>
 
             <div class="insights">
-                <div class="sales">
-                    <span class="material-icons-sharp">person</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>ผู้ใช้งานปัจจุบัน</h3>
-                            <h1><?php echo htmlspecialchars($current_username); ?></h1>
-                        </div>
+
+                <div class="room-list-section">
+                    <h2>ห้องประชุมที่มีให้บริการ</h2>
+                    <div class="room-card-container" id="roomListContainer">
+                        <p>กำลังโหลดข้อมูลห้องประชุม...</p>
                     </div>
                 </div>
-                <!-- End of sales -->
-                <div class="expenses">
-                    <span class="material-icons-sharp">bar_chart</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Total Expenses</h3>
-                            <h1>$14,000</h1>
-                        </div>
-                        <div class="progress">
-                            <svg>
-                                <circle cx='38' cy='38' r='36'></circle>
-                            </svg>
-                            <div class="number">
-                                <p>62%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <small class="text-muted">Last 24 Hour.</small>
-                </div>
-                <!-- End of Expenses -->
-                <div class="income">
-                    <span class="material-icons-sharp">stacked_line_chart</span>
-                    <div class="middle">
-                        <div class="left">
-                            <h3>Total Income</h3>
-                            <h1>$10,380</h1>
-                        </div>
-                        <div class="progress">
-                            <svg>
-                                <circle cx='38' cy='38' r='36'></circle>
-                            </svg>
-                            <div class="number">
-                                <p>44%</p>
-                            </div>
-                        </div>
-                    </div>
-                    <small class="text-muted">Last 24 Hour.</small>
-                </div>
-                <!-- End of Income -->
-            </div>
+                
             <!-- End of Insights -->
 
              <div class="recent-orders">
