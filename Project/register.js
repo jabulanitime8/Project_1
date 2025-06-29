@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             // ============ ถ้า Validation ผ่าน ให้ส่งข้อมูลไป Server ============
-            const registerUrl = 'http://localhost/Project_1/Project/register_process.php'; // URL ของไฟล์/API ลงทะเบียนบน Server
+            const registerUrl = 'http://localhost/Gitclone/Project/register_process.php'; // URL ของไฟล์/API ลงทะเบียนบน Server
 
             const formData = new FormData();
             formData.append('username', username);
