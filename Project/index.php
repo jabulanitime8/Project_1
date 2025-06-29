@@ -224,7 +224,7 @@ $current_username = $_SESSION['username'];
         </div>
     </div>
 
-    <script src="./common.js"></script><script src="./index.js"></script>
+    <script src="./common.js"></script><script src="./index.js"></script></script>
     
 </body>
 </html>
