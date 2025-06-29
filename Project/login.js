@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // ============ ถ้า Validation ผ่าน ให้ส่งข้อมูลไป Server ============
             // ส่วนนี้จะส่งข้อมูลไปยัง Server โดยใช้ Fetch API
             // คุณต้องกำหนด URL ของไฟล์/API ที่จะประมวลผลการ Login บน Server ของคุณ
-            const loginUrl = 'http://localhost/Project_1/Project/login_process.php'; // หรือ .js, .py, .java, etc.
+            const loginUrl = 'http://localhost/Gitclone/Project/login_process.php'; // หรือ .js, .py, .java, etc.
 
             // สร้าง FormData object เพื่อส่งข้อมูลฟอร์ม
             const formData = new FormData();
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.success) {
                     alert('เข้าสู่ระบบสำเร็จ!');
                     // Redirect ไปยังหน้า Dashboard หรือหน้าหลัก
-                    window.location.href = 'index.html'; // หรือ dashboard.html
+                    window.location.href = 'index.php'; // หรือ dashboard.html
                 } else {
                     alert('เข้าสู่ระบบไม่สำเร็จ: ' + (data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'));
                 }
