@@ -7,7 +7,7 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 // ตั้งค่าการเชื่อมต่อฐานข้อมูล
 $host = 'localhost';
-$db   = 'my_login_db';   // <--- ชื่อฐานข้อมูลของคุณ
+$db   = 'meeting_room_booking_system';   // <--- ชื่อฐานข้อมูลของคุณ
 $user = 'root';        // <--- User ของ MySQL ใน XAMPP
 $pass = '';          // <--- Password ของ MySQL ใน XAMPP
 $charset = 'utf8mb4';
