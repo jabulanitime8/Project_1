@@ -50,7 +50,7 @@ $current_username = $_SESSION['username'];
                     <span class="material-icons-sharp">grid_view</span>
                     <h3>Dashboard</h3>
                 </a>
-                <a href="#" id="bookRoomLink">
+                <a href="book_room.php" id="bookRoomLink">
                     <span class="material-icons-sharp">event_available</span>
                     <h3>จองห้องประชุม</h3>
                 </a>
@@ -212,7 +212,7 @@ $current_username = $_SESSION['username'];
                             <h3>NEW CUSTOMERS</h3>
                             <small class="text-muted">Last 24 Hours.</small>
                         </div>
-                        <h5 class="danger">+25%</h5>
+                        <h5 class="success">+25%</h5>
                         <h3>849</h3>
                     </div>
                 </div>
@@ -224,6 +224,7 @@ $current_username = $_SESSION['username'];
         </div>
     </div>
 
-    <script src="./index.js"></script>
+    <script src="./common.js"></script><script src="./index.js"></script>
+    
 </body>
 </html>
