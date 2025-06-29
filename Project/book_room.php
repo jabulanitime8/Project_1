@@ -75,11 +75,15 @@ $current_username = $_SESSION['username'];
 
                     <div class="form-group">
                         <label>เลือกช่วงเวลา:</label>
-                        <div class="time-slots-container" id="timeSlotsContainer">
-                            <p>โปรดเลือกห้องและวันที่ก่อน</p>
+                        <div class="form-group">
+                            <label for="start_time_input">เวลาเริ่มต้น:</label>
+                            <input type="time" id="start_time_input" name="start_time_input" required>
                         </div>
-                        <input type="hidden" id="start_time" name="start_time">
-                        <input type="hidden" id="end_time" name="end_time">
+
+                        <div class="form-group">
+                            <label for="end_time_input">เวลาสิ้นสุด:</label>
+                            <input type="time" id="end_time_input" name="end_time_input" required>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -210,5 +214,15 @@ $current_username = $_SESSION['username'];
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/th.js"></script> <script src="common.js"></script> <script src="book_room.js"></script> </body>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/th.js"></script> 
+    
+    <script src="common.js"></script> 
+
+    <script>
+        // ประกาศตัวแปร global JavaScript ที่จะใช้เก็บ user_id
+        // ต้องแน่ใจว่า $current_user_id มีค่าอยู่จริงจาก session_start()
+        const currentLoggedInUserId = <?php echo json_encode($current_user_id); ?>;
+    </script>
+    
+    <script src="book_room.js"></script>
 </html>
