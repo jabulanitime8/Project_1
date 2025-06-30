@@ -33,11 +33,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $pdo = new PDO($dsn, $user, $pass, $options);
 
-        // คำสั่ง SQL สำหรับดึงข้อมูลผู้ใช้
+        $username = $_POST['username'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        // เตรียมคำสั่ง SQL เพื่อดึงข้อมูล user รวมถึง role
         // สำคัญ: ควรเก็บรหัสผ่านในฐานข้อมูลแบบ Hashed (เช่น password_hash() ใน PHP)
         // และตรวจสอบด้วย password_verify()
-        $stmt = $pdo->prepare("SELECT id, username, password_hash FROM users WHERE username = :username");
-        $stmt->execute(['username' => $username]);
+        $stmt = $pdo->prepare("SELECT id, username, password_hash, role FROM users WHERE username = ?");
+        $stmt->execute([$username]);
         $user = $stmt->fetch();
 
         if ($user) {
@@ -48,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['loggedin'] = true;
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['role'] = $user['role']; // <--- เพิ่มบรรทัดนี้เพื่อเก็บ role ใน Session
                 
                 // คืนค่า JSON กลับไปที่ Client
                 echo json_encode(['success' => true, 'message' => 'Login successful!']);
