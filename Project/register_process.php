@@ -45,6 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $pdo = new PDO($dsn, $user, $pass, $options);
 
+        $username = $_POST['username'] ?? '';
+        $password = $_POST['password'] ?? '';
+
+        if (empty($username) || empty($password)) {
+        echo json_encode(['success' => false, 'message' => 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน']);
+        exit;
+    }
+
         // ตรวจสอบว่า username หรือ email ซ้ำหรือไม่
         $stmt_check = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = :username OR email = :email");
         $stmt_check->execute(['username' => $username, 'email' => $email]);
@@ -55,13 +63,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Hash รหัสผ่านก่อนบันทึกลงฐานข้อมูล (สำคัญมาก!)
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $role = 'user'; // <--- กำหนด role เริ่มต้นเป็น 'user'
 
         // คำสั่ง SQL สำหรับเพิ่มผู้ใช้ใหม่
-        $stmt_insert = $pdo->prepare("INSERT INTO users (username, email, password_hash) VALUES (:username, :email, :password_hash)");
+        $stmt_insert = $pdo->prepare("INSERT INTO users (username, email, password_hash, role) VALUES (:username, :email, :password_hash)");
         $stmt_insert->execute([
             'username' => $username,
             'email' => $email,
-            'password_hash' => $hashed_password
+            'password_hash' => $hashed_password,
+            'role'=> $role
         ]);
 
         echo json_encode(['success' => true, 'message' => 'ลงทะเบียนสำเร็จ!']);
