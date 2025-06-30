@@ -1,0 +1,70 @@
+/* สำหรับตารางการจอง */
+#bookingListContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: var(--card-bg); /* ใช้สีพื้นหลังตาม theme */
+    border-radius: 8px;
+    overflow: hidden; /* เพื่อให้ border-radius ทำงานกับตาราง */
+}
+
+#bookingListContainer th,
+#bookingListContainer td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color); /* ใช้สีเส้นขอบตาม theme */
+}
+
+#bookingListContainer th {
+    background-color: var(--header-bg); /* สีพื้นหลังหัวตาราง */
+    color: var(--text-color-light); /* สีตัวอักษรหัวตาราง */
+    font-weight: bold;
+}
+
+#bookingListContainer tbody tr:hover {
+    background-color: var(--hover-bg); /* สีเมื่อ hover */
+}
+
+/* สำหรับสถานะการจอง */
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white; /* สีตัวอักษรเริ่มต้น */
+}
+
+.status-pending {
+    background-color: #ffc107; /* เหลือง */
+    color: #333;
+}
+
+.status-approved {
+    background-color: #28a745; /* เขียว */
+}
+
+.status-rejected {
+    background-color: #dc3545; /* แดง */
+}
+
+.status-completed {
+    background-color: #6c757d; /* เทา */
+}
+
+.status-unknown {
+    background-color: #17a2b8; /* ฟ้า */
+}
+
+/* ปุ่มยกเลิก */
+.cancel-btn {
+    background-color: #dc3545; /* แดง */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #c82333;
+}
