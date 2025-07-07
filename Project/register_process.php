@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *'); // อนุญาตสำหรับพัฒนา! ใน Production ควรระบุโดเมนที่แน่นอน
 header('Access-Control-Allow-Methods: POST');
@@ -66,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $role = 'user'; // <--- กำหนด role เริ่มต้นเป็น 'user'
 
         // คำสั่ง SQL สำหรับเพิ่มผู้ใช้ใหม่
-        $stmt_insert = $pdo->prepare("INSERT INTO users (username, email, password_hash, role) VALUES (:username, :email, :password_hash)");
+        $stmt_insert = $pdo->prepare("INSERT INTO users (username, email, password_hash, role) VALUES (:username, :email, :password_hash, :role)");
         $stmt_insert->execute([
             'username' => $username,
             'email' => $email,
