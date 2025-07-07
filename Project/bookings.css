@@ -1,28 +1,27 @@
-/* สำหรับตารางการจอง */
-#bookingListContainer table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: var(--card-bg); /* ใช้สีพื้นหลังตาม theme */
-    border-radius: 8px;
-    overflow: hidden; /* เพื่อให้ border-radius ทำงานกับตาราง */
+/* สำหรับเซลล์ในตาราง เพื่อป้องกันข้อความขึ้นบรรทัดใหม่ */
+/* คุณบอกว่าจัดการเรื่องตัวอักษรขึ้นบรรทัดใหม่ได้แล้ว แต่ถ้ายังพบปัญหา ลองพิจารณาส่วนนี้อีกครั้ง */
+#bookingListContainer td { /* หรือ .recent-orders td หากคุณใช้ class ครอบตารางโดยตรง */
+    white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
+    overflow: hidden;    /* ซ่อนข้อความที่เกินมา */
+    text-overflow: ellipsis; /* แสดง "..." เมื่อข้อความถูกซ่อน */
+    /* max-width: 150px; */    /* คุณอาจต้องกำหนดความกว้างสูงสุดของแต่ละคอลัมน์ตามเนื้อหา */
 }
 
-#bookingListContainer th,
-#bookingListContainer td {
-    padding: 12px 15px;
+#bookingListContainer table th,
+#bookingListContainer table td { /* ใช้ ID ที่ครอบตารางของคุณ */
+    padding: 0.8rem 0; /* ปรับ padding ในเซลล์ตาราง */
+    border-bottom: 1px solid var(--color-light); /* เส้นแบ่งระหว่างแถว */
     text-align: left;
-    border-bottom: 1px solid var(--border-color); /* ใช้สีเส้นขอบตาม theme */
 }
 
-#bookingListContainer th {
-    background-color: var(--header-bg); /* สีพื้นหลังหัวตาราง */
-    color: var(--text-color-light); /* สีตัวอักษรหัวตาราง */
-    font-weight: bold;
+#bookingListContainer table th {
+    color: var(--color-info-dark); /* สีหัวตาราง */
+    font-weight: 500;
+    font-size: 0.85rem;
 }
 
-#bookingListContainer tbody tr:hover {
-    background-color: var(--hover-bg); /* สีเมื่อ hover */
+#bookingListContainer table tbody tr:last-child td {
+    border-bottom: none; /* ไม่ให้มีเส้นขอบด้านล่างในแถวสุดท้าย */
 }
 
 /* สำหรับสถานะการจอง */
