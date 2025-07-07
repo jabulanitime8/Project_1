@@ -78,7 +78,6 @@ $current_user_id = $_SESSION['user_id'];
 
         <main>
             <h1>การจองของฉัน</h1>
-
                 <div class="recent-orders" >
                     <h2>รายการการจองของคุณ</h2>
                     <div id="bookingListContainer">
@@ -101,7 +100,15 @@ $current_user_id = $_SESSION['user_id'];
                 <div class="profile">
                     <div class="info">
                         <p>Hey ,<b><?php echo htmlspecialchars($_SESSION['username']); ?></b></p>
-                        <small class="text-muted">Admin</small>
+                        <small class="text-muted">
+                            <?php 
+                            if (isset($_SESSION['role'])) {
+                                echo ucfirst($_SESSION['role']); // ทำให้ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่ (Admin, User)
+                            } else {
+                                echo 'Guest'; // หรือข้อความเริ่มต้นอื่นๆ หากไม่มี role ใน session
+                            }
+                            ?>
+                        </small>
                     </div>
                     <div class="profile-photo">
                         <img src="./images/user_icon1.jpg" alt="">
