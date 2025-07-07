@@ -73,7 +73,6 @@ $current_username = $_SESSION['username'];
                     <a href="#" id="logoutBtn">
                         <span class="material-icons-sharp">logout</span> <h3>Logout</h3>
                     </a>
-             
         </div>
         </aside>
 <!---- END OF ASIDE ---->
@@ -99,13 +98,22 @@ $current_username = $_SESSION['username'];
                         <label>เลือกช่วงเวลา:</label>
                         <div class="form-group">
                             <label for="start_time_input">เวลาเริ่มต้น:</label>
-                            <input type="time" id="start_time_input" name="start_time_input" required>
+                            <input type="time" id="start_time_input" name="start_time" required step="1800">
                         </div>
 
                         <div class="form-group">
                             <label for="end_time_input">เวลาสิ้นสุด:</label>
-                            <input type="time" id="end_time_input" name="end_time_input" required>
+                            <input type="time" id="end_time_input" name="end_time" required step="1800">
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>เลือกช่วงเวลา:</label>
+                        <div class="time-slots-container" id="timeSlotsContainer">
+                            <p>โปรดเลือกห้องและวันที่ก่อน</p>
+                        </div>
+                        <input type="hidden" id="start_time" name="start_time">
+                        <input type="hidden" id="end_time" name="end_time">
                     </div>
 
                     <div class="form-group">
@@ -144,7 +152,15 @@ $current_username = $_SESSION['username'];
                 <div class="profile">
                     <div class="info">
                         <p>Hey ,<b><?php echo htmlspecialchars($current_username); ?></b></p>
-                        <small class="text-muted">Admin</small>
+                        <small class="text-muted">
+                            <?php 
+                            if (isset($_SESSION['role'])) {
+                                echo ucfirst($_SESSION['role']); // ทำให้ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่ (Admin, User)
+                            } else {
+                                echo 'Guest'; // หรือข้อความเริ่มต้นอื่นๆ หากไม่มี role ใน session
+                            }
+                            ?>
+                        </small>
                     </div>
                     <div class="profile-photo">
                         <img src="./images/user_icon1.jpg" alt="">
