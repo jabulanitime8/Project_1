@@ -13,8 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const bookingDateInput = document.getElementById('booking_date');
     
     // อ้างอิงถึง input เวลาใหม่
-    const startTimeInput = document.getElementById('start_time_input');
-    const endTimeInput = document.getElementById('end_time_input');
+    const startTimeInput = document.getElementById('start_time');
+    const endTimeInput = document.getElementById('end_time');
     
     const bookingForm = document.getElementById('bookingForm');
     // ไม่ต้องอ้างถึง timeSlotsContainer แล้ว
