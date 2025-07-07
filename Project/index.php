@@ -30,6 +30,7 @@ $current_username = $_SESSION['username'];
     <!-- Stylesheet -->
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./rooms.css">
+    <link rel="stylesheet" href="./book_room.css">
     
 </head>
 <body>
@@ -85,9 +86,9 @@ $current_username = $_SESSION['username'];
         <main>
             <h1>Dashboard</h1>
 
-            <div class="insights">
+            <div class="booking-form-section">
 
-                <div class="room-list-section">
+                <div class="booking-form">
                     <h2>ห้องประชุมที่มีให้บริการ</h2>
                     <div class="room-card-container" id="roomListContainer">
                         <p>กำลังโหลดข้อมูลห้องประชุม...</p>
@@ -95,51 +96,6 @@ $current_username = $_SESSION['username'];
                 </div>
                 
             <!-- End of Insights -->
-
-             <div class="recent-orders">
-                    <h2>Recent Orders</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Product Name</th>
-                                <th>Product Number</th>
-                                <th>Payment</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Foldable Mini Drone</td>
-                                <td>85631</td>
-                                <td>Due</td>
-                                <td class="warning">Pending</td>
-                                <td class="primary">Detail</td>
-                            </tr>
-                            <tr>
-                                <td>Foldable Mini Drone</td>
-                                <td>85631</td>
-                                <td>Due</td>
-                                <td class="warning">Pending</td>
-                                <td class="primary">Detail</td>
-                            </tr>
-                            <tr>
-                                <td>Foldable Mini Drone</td>
-                                <td>85631</td>
-                                <td>Due</td>
-                                <td class="warning">Pending</td>
-                                <td class="primary">Detail</td>
-                            </tr>
-                            <tr>
-                                <td>Foldable Mini Drone</td>
-                                <td>85631</td>
-                                <td>Due</td>
-                                <td class="warning">Pending</td>
-                                <td class="primary">Detail</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <a href="#">Show All</a>
-                </div>
         </main>
         <!-- End of Main -->
 
@@ -155,7 +111,15 @@ $current_username = $_SESSION['username'];
                 <div class="profile">
                     <div class="info">
                         <p>Hey ,<b><?php echo htmlspecialchars($current_username); ?></b></p>
-                        <small class="text-muted">Admin</small>
+                        <small class="text-muted">
+                            <?php 
+                                if (isset($_SESSION['role'])) {
+                                    echo ucfirst($_SESSION['role']); // ทำให้ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่ (Admin, User)
+                                } else {
+                                    echo 'Guest'; // หรือข้อความเริ่มต้นอื่นๆ หากไม่มี role ใน session
+                                }
+                                ?>
+                        </small>
                     </div>
                     <div class="profile-photo">
                         <img src="./images/user_icon1.jpg" alt="">
