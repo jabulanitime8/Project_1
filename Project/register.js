@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('email', email);
             formData.append('password', password); // ส่งรหัสผ่านไปเพื่อทำการ Hash ที่ Server-Side
 
-            fetch(registerUrl, {
+            fetch('register_process.php', {
                 method: 'POST',
                 body: formData
             })
