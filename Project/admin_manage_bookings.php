@@ -1,5 +1,6 @@
 <?php
 session_start(); // เริ่มต้นการทำงานของ PHP Session
+require_once 'db_config.php'; // ตรวจสอบเส้นทางของไฟล์ db_config.php
 
 // ตรวจสอบว่าผู้ใช้ได้เข้าสู่ระบบแล้วหรือไม่
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -15,6 +16,40 @@ $current_user_id = $_SESSION['user_id'];
 $current_username = $_SESSION['username'];
 
 // คุณสามารถใช้ตัวแปรเหล่านี้ในโค้ด HTML ของคุณได้ เช่น แสดงชื่อผู้ใช้
+
+// ดึงข้อมูลการจองที่อยู่ในสถานะ 'pending'
+$pending_bookings = [];
+try {
+    $stmt = $pdo->prepare("
+        SELECT 
+            b.id AS booking_id, 
+            b.title, 
+            b.start_time, 
+            b.end_time, 
+            b.status,
+            u.username AS user_name,
+            r.room_name,
+            o.officer_name
+        FROM 
+            bookings b
+        JOIN 
+            users u ON b.user_id = u.id
+        JOIN 
+            rooms r ON b.room_id = r.id
+        JOIN
+            officers o ON b.officer_id = o.id
+        WHERE 
+            b.status = 'pending'
+        ORDER BY 
+            b.start_date ASC
+    ");
+    $stmt->execute();
+    $pending_bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    // หากเกิดข้อผิดพลาดในการดึงข้อมูล
+    echo "Error: " . $e->getMessage();
+    // ใน Production ควร log error แทนการ echo
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,167 +69,59 @@ $current_username = $_SESSION['username'];
 </head>
 <body>
     <div class="container">
-        <aside>
-            <div class="top">
-                <div class="logo">
-                    <img src="./images/logo-jabulani.png">
-                    <h2 class="text-muted">Jabulani</h2>
-                </div>
-                <div class="close" id="close-btn">
-                    <span class="material-icons-sharp">close</span>
-                </div>
-            </div>
-
-            <div class="sidebar">
-            
-                    <a href="index.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>">
-                        <span class="material-icons-sharp">grid_view</span> <h3>Dashboard</h3>
-                    </a>
-                
-                    <a href="book_room.php" id="bookRoomLink" class="<?php echo basename($_SERVER['PHP_SELF']) == 'book_room.php' ? 'active' : ''; ?>">
-                        <span class="material-icons-sharp">event</span> <h3>จองห้องประชุม</h3>
-                    </a>
-                
-                    <a href="my_bookings.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'my_bookings.php' ? 'active' : ''; ?>">
-                        <span class="material-icons-sharp">event_available</span> <h3>การจองของฉัน</h3>
-                    </a>
-                
-                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                    
-                        <a href="admin_manage_bookings.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'admin_manage_bookings.php' ? 'active' : ''; ?>">
-                            <span class="material-icons-sharp">admin_panel_settings</span> <h3>จัดการการจอง (Admin)</h3>
-                        </a>
-                    
-                        <a href="manage_rooms.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'manage_rooms.php' ? 'active' : ''; ?>">
-                            <span class="material-icons-sharp">meeting_room</span> <h3>จัดการห้อง (Admin)</h3>
-                        </a>
-                    
-                        <a href="manage_officers.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'manage_officers.php' ? 'active' : ''; ?>">
-                            <span class="material-icons-sharp">groups</span> <h3>จัดการเจ้าหน้าที่ (Admin)</h3>
-                        </a>
-                    
-                <?php endif; ?>
-                
-                    <a href="#" id="logoutBtn">
-                        <span class="material-icons-sharp">logout</span> <h3>Logout</h3>
-                    </a>
-                
-        </div>
-        </aside>
+        <?php include 'sidebar.php'; // เรียกใช้ sidebar สำหรับทุกหน้า ?> 
         <!---- END OF ASIDE ---->
         <main>
-            
+            <h1>การจองที่รออนุมัติ</h1>
+
+            <div class="recent-orders"> <h2>รายการจอง</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ผู้จอง</th>
+                            <th>ห้องประชุม</th>
+                            <th>เจ้าหน้าที่</th>
+                            <th>หัวข้อ</th>
+                            <th>วันที่</th>
+                            <th>เวลาเริ่มต้น</th>
+                            <th>เวลาสิ้นสุด</th>
+                            <th>สถานะ</th>
+                            <th>จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($pending_bookings)): ?>
+                            <tr>
+                                <td colspan="9" style="text-align: center;">ไม่มีการจองที่รออนุมัติ</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($pending_bookings as $booking): ?>
+                                <tr data-booking-id="<?php echo $booking['booking_id']; ?>">
+                                    <td><?php echo htmlspecialchars($booking['user_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($booking['room_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($booking['officer_name']); ?></td>
+                                    <td><?php echo htmlspecialchars($booking['topic']); ?></td>
+                                    <td><?php echo (new DateTime($booking['start_datetime']))->format('Y-m-d'); ?></td>
+                                    <td><?php echo (new DateTime($booking['start_datetime']))->format('H:i'); ?></td>
+                                    <td><?php echo (new DateTime($booking['end_datetime']))->format('H:i'); ?></td>
+                                    <td class="status <?php echo strtolower($booking['status']); ?>">
+                                        <?php echo ucfirst($booking['status']); ?>
+                                    </td>
+                                    <td class="actions">
+                                        <button class="btn btn-success approve-btn" data-id="<?php echo $booking['booking_id']; ?>">อนุมัติ</button>
+                                        <button class="btn btn-danger reject-btn" data-id="<?php echo $booking['booking_id']; ?>">ปฏิเสธ</button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </main>
         <!-- End of Main -->
 
-        <div class="right">
-            <div class="top">
-                <button id="menu-btn">
-                    <span class="material-icons-sharp">menu</span>
-                </button>
-                <div class="theme-toggler">
-                    <span class="material-icons-sharp active" >light_mode</span>
-                    <span class="material-icons-sharp">dark_mode</span>
-                </div>
-                <div class="profile">
-                    <div class="info">
-                        <p>Hey ,<b><?php echo htmlspecialchars($current_username); ?></b></p>
-                        <small class="text-muted">
-                            <?php 
-                                if (isset($_SESSION['role'])) {
-                                    echo ucfirst($_SESSION['role']); // ทำให้ตัวอักษรแรกเป็นตัวพิมพ์ใหญ่ (Admin, User)
-                                } else {
-                                    echo 'Guest'; // หรือข้อความเริ่มต้นอื่นๆ หากไม่มี role ใน session
-                                }
-                                ?>
-                        </small>
-                    </div>
-                    <div class="profile-photo">
-                        <img src="./images/user_icon1.jpg" alt="">
-                    </div>
-                </div>
-            </div>
-            <!------- End of Top -------->
-            <div class="recent-updates">
-                <h2>Recent Updates</h2>
-                <div class="updates">
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="./images/logo_jabul.jpg" alt="">
-                        </div>
-                        <div class="message">
-                            <p><b>Mike Tyson</b> recived his  order of Night lion tech GPS drone.</p>
-                            <small class="text-muted">2 Minutes Ago</small>
-                        </div>
-                    </div>
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="./images/user_icon2.jpg" alt="">
-                        </div>
-                        <div class="message">
-                            <p><b>Mike Tyson</b> recived his  order of Night lion tech GPS drone.</p>
-                            <small class="text-muted">6 Minutes Ago</small>
-                        </div>
-                    </div>
-                    <div class="update">
-                        <div class="profile-photo">
-                            <img src="./images/user_icon5.jpg" alt="">
-                        </div>
-                        <div class="message">
-                            <p><b>Mike Tyson</b> recived his  order of Night lion tech GPS drone.</p>
-                            <small class="text-muted">13 Minutes Ago</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!------------- End of Recent Updates ---------------->
-            <div class="sales-analytics">
-                <h2>Sales Analytics</h2>
-                <div class="item online">
-                    <div class="icon">
-                        <span class="material-icons-sharp">shopping_cart</span>
-                    </div>
-                    <div class="right">
-                        <div class="info">
-                            <h3>ONLINE ORDERS</h3>
-                            <small class="text-muted">Last 24 Hours.</small>
-                        </div>
-                        <h5 class="success">+39%</h5>
-                        <h3>3849</h3>
-                    </div>
-                </div>
-                <div class="item offline">
-                    <div class="icon">
-                        <span class="material-icons-sharp">local_mall</span>
-                    </div>
-                    <div class="right">
-                        <div class="info">
-                            <h3>OFFLINE ORDERS</h3>
-                            <small class="text-muted">Last 24 Hours.</small>
-                        </div>
-                        <h5 class="danger">-17%</h5>
-                        <h3>1100</h3>
-                    </div>
-                </div>
-                <div class="item customers">
-                    <div class="icon">
-                        <span class="material-icons-sharp">person</span>
-                    </div>
-                    <div class="right">
-                        <div class="info">
-                            <h3>NEW CUSTOMERS</h3>
-                            <small class="text-muted">Last 24 Hours.</small>
-                        </div>
-                        <h5 class="success">+25%</h5>
-                        <h3>849</h3>
-                    </div>
-                </div>
-                <div class="item add-product">
-                    <span class="material-icons-sharp">add</span>
-                    <h3>Add Product</h3>
-                </div>
-            </div>
-        </div>
+        <?php include 'rights.php'; // เรียกใช้ rights สำหรับทุกหน้า ?> 
+        <!---- END OF Rights ----> 
     </div>
 
     <script src="./common.js"></script><script src="./index.js"></script></script>
