@@ -41,7 +41,7 @@ try {
         WHERE 
             b.status = 'pending'
         ORDER BY 
-            b.start_date ASC
+            b.start_time ASC
     ");
     $stmt->execute();
     $pending_bookings = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -100,10 +100,10 @@ try {
                                     <td><?php echo htmlspecialchars($booking['user_name']); ?></td>
                                     <td><?php echo htmlspecialchars($booking['room_name']); ?></td>
                                     <td><?php echo htmlspecialchars($booking['officer_name']); ?></td>
-                                    <td><?php echo htmlspecialchars($booking['topic']); ?></td>
-                                    <td><?php echo (new DateTime($booking['start_datetime']))->format('Y-m-d'); ?></td>
-                                    <td><?php echo (new DateTime($booking['start_datetime']))->format('H:i'); ?></td>
-                                    <td><?php echo (new DateTime($booking['end_datetime']))->format('H:i'); ?></td>
+                                    <td><?php echo htmlspecialchars($booking['title']); ?></td>
+                                    <td><?php echo (new DateTime($booking['start_time']))->format('Y-m-d'); ?></td>
+                                    <td><?php echo (new DateTime($booking['start_time']))->format('H:i'); ?></td>
+                                    <td><?php echo (new DateTime($booking['end_time']))->format('H:i'); ?></td>
                                     <td class="status <?php echo strtolower($booking['status']); ?>">
                                         <?php echo ucfirst($booking['status']); ?>
                                     </td>
@@ -124,6 +124,8 @@ try {
         <!---- END OF Rights ----> 
     </div>
 
-    <script src="./common.js"></script><script src="./index.js"></script></script>
+    <script src="./common.js"></script>
+    <script src="./index.js"></script>
+    <script src="./update_booking_status.js"></script>
 </body>
 </html>
