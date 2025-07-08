@@ -27,7 +27,7 @@
             <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                 
                     <a href="admin_manage_bookings.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'admin_manage_bookings.php' ? 'active' : ''; ?>">
-                        <span class="material-icons-sharp">admin_panel_settings</span> <h3>จัดการการจอง (Admin)</h3>
+                        <span class="material-icons-sharp">pending_actions</span> <h3>จัดการการจอง (Admin)</h3>
                     </a>
                 
                     <a href="manage_rooms.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'manage_rooms.php' ? 'active' : ''; ?>">
