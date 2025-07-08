@@ -30,7 +30,7 @@
                         <span class="material-icons-sharp">pending_actions</span> <h3>จัดการการจอง (Admin)</h3>
                     </a>
                 
-                    <a href="manage_rooms.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'manage_rooms.php' ? 'active' : ''; ?>">
+                    <a href="admin_manage_rooms.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'admin_manage_rooms.php' ? 'active' : ''; ?>">
                         <span class="material-icons-sharp">meeting_room</span> <h3>จัดการห้อง (Admin)</h3>
                     </a>
                 
