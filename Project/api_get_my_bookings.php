@@ -5,10 +5,13 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true || !isset($_SESSION['user_id'])) {
-    echo json_encode(['success' => false, 'message' => 'Unauthorized: User not logged in.']);
+// ตรวจสอบการ Login เหมือนกับ index.php
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    header('Location: login.html');
     exit;
 }
+$current_user_id = $_SESSION['user_id'];
+$current_username = $_SESSION['username'];
 
 // ตั้งค่าการเชื่อมต่อฐานข้อมูล
 $host = 'localhost';
