@@ -114,7 +114,6 @@ if (isset($_GET['edit_id'])) {
       rel="stylesheet">
     <!-- Stylesheet -->
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./rooms.css">
     <link rel="stylesheet" href="./book_room.css">
     <link rel="stylesheet" href="./bookings.css">
 
@@ -239,5 +238,7 @@ if (isset($_GET['edit_id'])) {
             }
         });
     </script>
-    <script src="./main.js"></script> </body>
+    <script src="./index.js"></script> 
+    <script src="./common.js"></script> 
+</body>
 </html>
